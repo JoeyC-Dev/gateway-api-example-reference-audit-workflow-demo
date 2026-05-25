@@ -1,6 +1,7 @@
 #$ Used in:
 #$ - guides/user-guides/traffic-splitting.md
-#$ - reference/api-types/httproute.md
+#$ - src-site/reference/api-types/httproute.md
+#$ - guides/user-guides/traffic-splitting.md
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
