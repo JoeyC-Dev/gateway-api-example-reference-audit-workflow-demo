@@ -343,7 +343,7 @@ The following `my-route` Route wants to attach to the `foo-gateway` in the
 `foo-gateway` is in a different Namespace. The `foo-gateway` must allow
 attachment from HTTPRoutes in the namespace `gateway-api-example-ns2`.
 
-{{< readfile file="/examples/standard/http-route-attachment/httproute.yaml" code="true" lang="yaml" >}}
+{{< readfile file="/examples/standard/multicluster/httproute-simple.yaml" code="true" lang="yaml" >}}
 
 This `foo-gateway` allows the `my-route` HTTPRoute to attach.
 
