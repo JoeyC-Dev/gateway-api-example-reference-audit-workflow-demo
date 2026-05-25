@@ -146,6 +146,7 @@ def main():
     missing = []
     invalid = []
     duplicated = []
+    unused = []
 
     for example_file in target_example_files():
         example = Path(example_file).removeprefix("/")
@@ -167,12 +168,15 @@ def main():
 
         if duplicated_refs:
             duplicated.append((example, duplicated_refs))
+        
+        if not expected and not current:
+            unused.append(example)
     
     output_lines = ["**Example YAML reference check**", ""]
 
     if missing:
         # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-commands#example-of-a-workflow-command
-        print("::warning::Some example YAML files need new reference entries")
+        print("::error::Some example YAML files need new reference entries")
 
         output_lines.append("**Missing reference entries**")
         for example, refs in missing:
@@ -194,7 +198,7 @@ def main():
                 output_lines.append(f"  - remove or update `{ref}`")
     
     if duplicated:
-        print("::warning::Some example YAML files have duplicated reference entries")
+        print("::error::Some example YAML files have duplicated reference entries")
         if missing or invalid:
             output_lines.append("")
 
@@ -205,15 +209,26 @@ def main():
             for ref in refs:
                 output_lines.append(f"  - remove duplicated `{ref}`")
     
+    if unused:
+        print("::warning::Some example YAML files are not referenced by documentation")
+
+        if missing or invalid or duplicated:
+            output_lines.append("")
+
+        output_lines.append("**Unreferenced example YAML files**")
+        for example in unused:
+            output_lines.append(f"- `{example}`")
+            output_lines.append("  - no reference header and no documentation usage found")
+    
     if not missing and not invalid and not duplicated:
         output_lines.append("No example YAML reference issues found.")
     
     comment = "\n".join(output_lines).strip()
     COMMENT_OUTPUT.write_text(comment, encoding="utf-8")
 
-    # Do not fail on missing reference headers yet
+    # Do not fail on unused example files yet
     # Detail: https://github.com/kubernetes-sigs/gateway-api/pull/4840#issuecomment-4469495261
-    if invalid or duplicated:
+    if missing or invalid or duplicated:
         return 1
 
     return 0
