@@ -220,7 +220,7 @@ def main():
             output_lines.append(f"- `{example}`")
             output_lines.append("  - no reference header and no documentation usage found")
     
-    if not missing and not invalid and not duplicated:
+    if not missing and not invalid and not duplicated and not unused:
         output_lines.append("No example YAML reference issues found.")
     
     comment = "\n".join(output_lines).strip()
