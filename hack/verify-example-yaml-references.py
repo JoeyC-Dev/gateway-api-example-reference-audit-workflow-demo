@@ -81,7 +81,7 @@ def target_example_files():
     return example_files()
 
 def normalize_ref_path(path):
-    normalized_path = Path(path).removeprefix("/")
+    normalized_path = Path(path).as_posix().removeprefix("/")
     if normalized_path.startswith("site/content/en/"):
         return normalized_path.removeprefix("site/content/en/")
     
@@ -149,7 +149,7 @@ def main():
     unused = []
 
     for example_file in target_example_files():
-        example = Path(example_file).removeprefix("/")
+        example = Path(example_file).as_posix().removeprefix("/")
         expected = map.get(example, [])
         current, duplicated_refs = parse_header(example_file.read_text(encoding="utf-8"))
 
