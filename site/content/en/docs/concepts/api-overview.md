@@ -336,7 +336,7 @@ following mechanisms:
 If none of the above are specified, a Gateway listener will trust Routes
 attached from the same namespace that support the listener protocol.
 
-#### Further Gateway - Route attachment examples
+#### Further Gateway - Route attachment examples 
 
 The following `my-route` Route wants to attach to the `foo-gateway` in the
 `gateway-api-example-ns1` and will not attach to any other Gateways. Note that
