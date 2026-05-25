@@ -43,7 +43,6 @@ jobs:
     permissions:
       contents: read
       pull-requests: read
-      issues: write
     steps:
       - name: Checkout code
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
@@ -55,4 +54,13 @@ jobs:
           CHANGED_YAMLS: ${{ needs.detect-changes.outputs.examples_files }}
           CHANGED_REFERENCES: ${{ needs.detect-changes.outputs.references_files }}
         run: |
+          set +e
           python3 hack/verify-example-yaml-references.py
+          status=$?
+          set -e
+
+          if [ -f example-yaml-reference-audit-comment.md ]; then
+            cat example-yaml-reference-audit-comment.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+          exit "$status"
