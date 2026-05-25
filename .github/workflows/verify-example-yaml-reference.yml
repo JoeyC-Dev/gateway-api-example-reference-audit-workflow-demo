@@ -2,7 +2,7 @@ name: Verify example YAMLs reference
 
 on:
   pull_request:
-    types: [opened, edited, synchronize, reopened]
+    types: [opened, synchronize, reopened]
 
 permissions: {}
 
