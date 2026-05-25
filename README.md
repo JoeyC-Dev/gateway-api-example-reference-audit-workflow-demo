@@ -1,82 +1,31 @@
-# Kubernetes Gateway API
+# Gateway API Example Reference Audit Workflow Demo
 
-The Gateway API is a part of [SIG Network][sn], and this repository contains
-the specification and Custom Resource Definitions (CRDs).
+This repository is a demo for validating example YAML reference headers with
+GitHub Actions. It is intended for testing and demonstrating the reference-check
+workflow, not for serving as the upstream Gateway API repository.
 
-## Status
+The demo adds a workflow that checks whether example YAML files under
+`examples/` have reference headers that match their real usage from
+documentation files under `site/content/en/` and `geps/`.
 
-The latest supported version is `v1` as released by
-the [v1.5.1 release][gh_release] of this project.
 
-This version of the API has GA level support for the following resources:
+## What it does
 
-- `v1.GatewayClass`
-- `v1.Gateway`
-- `v1.ListenerSet`
-- `v1.HTTPRoute`
-- `v1.GRPCRoute`
-- `v1.TLSRoute`
-- `v1.BackendTLSPolicy`
-- `v1.ReferenceGrant`
+- Detect changed example YAML and Markdown files in pull requests.
+- Verify `#$` reference headers in example YAML files.
+- Report missing, stale, duplicated, and unreferenced example YAML references.
+- Write the verification report to the GitHub Actions job summary.
 
-For all the other APIs and their support levels please consult [the spec][spec].
+## Note
 
-## Documentation
+- The check is skipped when neither example YAML files nor reference Markdown
+  files are changed.
+- If only files under `examples/` are changed, only the changed example YAML
+  files are checked.
+- If any Markdown file is changed, the full example YAML check runs.
+- Unreferenced example YAML files are reported but do not fail the check.
 
-### Website
+## Original Project
 
-The API specification and detailed documentation is available on the project
-website: [https://gateway-api.sigs.k8s.io][ghp].
-
-### Concepts
-
-To get started, please read through [API concepts][concepts] and
-[Security model][security-model]. These documents give the necessary background
-to understand the API and the use-cases it targets.
-
-### Getting started
-
-Once you have a good understanding of the API at a higher-level, check out
-[getting started][getting-started] to install your first Gateway controller and try out
-one of the guides.
-
-### References
-
-For a complete API reference, please refer to:
-
-- [API reference][spec]
-- [Go docs for the package][godoc]
-
-## Gateway API conformance
-
-If you are developing a Gateway API implementation and want to run conformance tests
-against your project and eventually submit the proof of conformance, visit the [conformance
-documentation][conformance-docs] for the test suite documentation, and the conformance
-reports [readme][reports-readme] to see the reports submission rules. If you
-are a user who wants to explore the features supported by the various implementations,
-navigate the [conformance reports][conformance-reports]
-
-## Contributing
-
-Community meeting schedule, notes and developer guide can be found on the
-[community page][cm].
-Our Kubernetes Slack channel is [#sig-network-gateway-api][slack].
-
-### Code of conduct
-
-Participation in the Kubernetes community is governed by the
-[Kubernetes Code of Conduct](code-of-conduct.md).
-
-[ghp]: https://gateway-api.sigs.k8s.io/
-[sn]: https://github.com/kubernetes/community/tree/master/sig-network
-[cm]: https://gateway-api.sigs.k8s.io/contributing/community
-[slack]: https://kubernetes.slack.com/messages/sig-network-gateway-api
-[getting-started]: https://gateway-api.sigs.k8s.io/guides/
-[spec]: https://gateway-api.sigs.k8s.io/reference/api-spec/main/spec/
-[concepts]: https://gateway-api.sigs.k8s.io/docs/concepts/api-overview
-[security-model]: https://gateway-api.sigs.k8s.io/concepts/security-model
-[gh_release]: https://github.com/kubernetes-sigs/gateway-api/releases/tag/v1.5.1
-[godoc]: https://pkg.go.dev/sigs.k8s.io/gateway-api
-[conformance-docs]: https://gateway-api.sigs.k8s.io/docs/concepts/conformance/
-[reports-readme]: ./conformance/reports/README.md
-[conformance-reports]: ./conformance/reports/
+For the official Kubernetes Gateway API project, see:
+https://github.com/kubernetes-sigs/gateway-api
