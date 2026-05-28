@@ -55,7 +55,7 @@ the exception that the endpoints attached to a ServiceImport may span multiple
 clusters. For example, the following HTTPRoute would forward traffic to
 endpoints attached to the "store" ServiceImport:
 
-{{< readfile file="/examples/standard/multicluster/httproute-simple.yaml" code="true" lang="yaml" >}}
+{{< readfile file="/examples/standard/multicluster/not-httproute-simple.yaml" code="true" lang="yaml" >}}
 
 #### Routing to Specific Clusters
 
